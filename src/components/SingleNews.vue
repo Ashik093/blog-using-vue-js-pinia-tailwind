@@ -3,6 +3,7 @@
 import { useNewsStore } from '../store/news';
 import { useRoute } from 'vue-router';
 import { onMounted } from 'vue';
+import DataNotFound from './DataNotFound.vue';
 
 const newsStore = useNewsStore()
 const route = useRoute();
@@ -14,7 +15,7 @@ onMounted(()=>{
 
 </script>
 <template>
-  <div class="relative">
+  <div class="relative" v-if="newsStore.newsById && typeof newsStore.newsById === 'object' && Object.keys(newsStore.newsById).length !== 0">
     <div class="max-w-5xl mb-10 rounded overflow-hidden flex flex-col mx-auto text-center">
       <img class="w-full my-4"
         :src="newsStore.newsById.img"
@@ -52,4 +53,5 @@ onMounted(()=>{
       </div>
     </div>
   </div>
+  <DataNotFound v-else></DataNotFound>
 </template>
